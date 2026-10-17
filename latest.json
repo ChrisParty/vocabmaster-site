@@ -1,6 +1,6 @@
 {
-  "version": "1.0.5",
-  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.5.zip",
-  "notes": "Better memory hooks (new card model), spending overview in Settings",
+  "version": "1.0.6",
+  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.6.zip",
+  "notes": "Sentences (everyday phrases, separate from your cards), hide the memory hook, start over with a fresh deck",
   "published": "2026-10-17"
 }
