@@ -1,6 +1,6 @@
 {
-  "version": "1.0.10",
-  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.10.zip",
-  "notes": "A spinner while the AI works, Go to word after adding one, Listen in Browse",
+  "version": "1.0.11",
+  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.11.zip",
+  "notes": "Listen finds every installed Windows voice (Swedish, Greek); the big button says Study",
   "published": "2026-10-18"
 }
