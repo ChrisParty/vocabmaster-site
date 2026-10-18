@@ -1,6 +1,6 @@
 {
-  "version": "1.0.8",
-  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.8.zip",
-  "notes": "Windows setup installs Python by itself and explains any problem",
+  "version": "1.0.9",
+  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.9.zip",
+  "notes": "Japanese: step-by-step kana with a hiragana/katakana choice, kana-first words; honest Due Today; clearer buttons",
   "published": "2026-10-18"
 }
