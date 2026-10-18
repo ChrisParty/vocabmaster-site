@@ -1,6 +1,6 @@
 {
-  "version": "1.0.9",
-  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.9.zip",
-  "notes": "Japanese: step-by-step kana with a hiragana/katakana choice, kana-first words; honest Due Today; clearer buttons",
+  "version": "1.0.10",
+  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.10.zip",
+  "notes": "A spinner while the AI works, Go to word after adding one, Listen in Browse",
   "published": "2026-10-18"
 }
