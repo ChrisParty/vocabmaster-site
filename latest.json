@@ -1,6 +1,6 @@
 {
-  "version": "1.0.7",
-  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.7.zip",
-  "notes": "Japanese: complete kana chart and drill, readings for every kanji, quiz accepts kana or romaji",
-  "published": "2026-10-17"
+  "version": "1.0.8",
+  "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.0.8.zip",
+  "notes": "Windows setup installs Python by itself and explains any problem",
+  "published": "2026-10-18"
 }
