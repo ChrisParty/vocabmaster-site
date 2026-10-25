@@ -603,6 +603,7 @@ h2 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-size: 
 
 /* ------------------------------------------------------------ languages */
 .lang-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 60px; }
+.lang-grid .lang-card:nth-child(n+6) { --row: 2; }
 .lang-card {
   position: relative; padding: 24px 20px 22px; border-radius: 22px; border: 1px solid var(--line); text-align: left;
   background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .01));
@@ -780,7 +781,6 @@ h2 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-size: 
   .t-alpha .tile-art, .t-talk .tile-art { min-height: 260px; }
   .hangul { font-size: 32px; gap: 7px; } .hangul .block { font-size: 50px; }
   .lang-grid { grid-template-columns: 1fr 1fr; }
-  .lang-card:last-child { grid-column: span 2; }
   .level-switch { grid-template-columns: repeat(2, 1fr); }
   .level-words { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .level-switch button { padding: 10px 14px; }
