@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get Pro — VocabMaster</title>
+<meta name="description" content="VocabMaster Pro: new AI-written words every day, a daily story, conversations and Say it.">
+<meta name="theme-color" content="#0b0f16">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+  .pro-main { max-width: 900px; padding-top: 130px; padding-bottom: 90px; text-align: center; }
+  .pro-main h1 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-size: clamp(42px, 6vw, 68px); line-height: 1.05; letter-spacing: -.02em; margin-bottom: 18px; }
+  .pro-account { display: inline-flex; gap: 10px; align-items: center; margin: 6px 0 34px; padding: 8px 16px; border-radius: 999px;
+    border: 1px solid var(--line-2); background: rgba(255,255,255,.04); color: var(--soft); font-size: 15px; }
+  .pro-account b { font-family: ui-monospace, "Cascadia Code", Menlo, monospace; color: var(--text); letter-spacing: .04em; }
+  .pro-main .plans { text-align: left; }
+  .soon-note { margin: 26px auto 0; max-width: 34em; color: var(--muted); }
+  .soon-note b { color: var(--text); }
+</style>
+</head>
+<body class="doc-page">
+<header class="nav scrolled">
+  <a class="brand" href="./"><img src="assets/img/icon-64.png" alt="" width="34" height="34"><span>VocabMaster</span></a>
+  <a class="btn btn-ghost btn-small nav-back" href="./">← VocabMaster</a>
+</header>
+
+<main class="pro-main wrap">
+  <p class="entry"><b>pro</b> <i>n.</i> — everything, every day.</p>
+  <h1>Keep every word coming.</h1>
+  <p class="pro-account" data-account-line hidden>Your account <b data-account></b></p>
+
+  <div class="billing" role="radiogroup" aria-label="Billing" data-billing>
+    <span class="billing-thumb" aria-hidden="true"></span>
+    <button type="button" role="radio" aria-checked="false" data-bill="month">Monthly</button>
+    <button type="button" role="radio" aria-checked="true" data-bill="year">Yearly <span class="save">save 33%</span></button>
+  </div>
+
+  <div class="plans" style="grid-template-columns: minmax(0, 520px); justify-content: center;">
+    <article class="plan plan-pro">
+      <span class="plan-flag">Pro</span>
+      <h3>VocabMaster Pro</h3>
+      <p class="price"><b data-price>799 kr</b><span data-per>a year</span></p>
+      <p class="plan-lede" data-price-note>About 67 kr a month, paid once a year.</p>
+      <ul class="checks">
+        <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>New AI-written words every day — up to 1,200 a month</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>A new story every day, two conversations a day</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Say it, sentences and fresh memory tricks</span></li>
+        <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Every language, on two computers · cancel any time</span></li>
+      </ul>
+      <a class="btn btn-primary btn-block" href="#" data-checkout hidden>Continue to payment</a>
+    </article>
+  </div>
+  <p class="soon-note" data-soon><b>Payments open very soon.</b> Your words and your reviews stay free in the meantime — and your account number above is all we need to switch you to Pro.</p>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div><a class="brand" href="./"><img src="assets/img/icon-64.png" alt="" width="28" height="28"><span>VocabMaster</span></a></div>
+    <nav aria-label="Footer"><a href="./#faq">Questions</a><a href="privacy.html">Privacy</a></nav>
+  </div>
+</footer>
+
+<script>
+  // Opened by the app (Settings → Your plan → Get Pro) as pro.html?account=VM-XXXXXX.
+  // CHECKOUT: the payment provider's checkout links once there is one —
+  // "{account}" is replaced by the account number, so the payment finds its
+  // way to the right copy of VocabMaster. Empty: "payments open very soon".
+  const CHECKOUT = { month: "", year: "" };
+  const PLANS = {
+    month: ["99 kr", "a month", "Cancel any time. Your words stay yours."],
+    year: ["799 kr", "a year", "About 67 kr a month, paid once a year."],
+  };
+  (function () {
+    const raw = new URLSearchParams(location.search).get("account") || "";
+    const account = /^VM-[2-9A-HJKMNP-Z]{6}$/.test(raw.toUpperCase()) ? raw.toUpperCase() : "";
+    if (account) {
+      document.querySelector("[data-account]").textContent = account;
+      document.querySelector("[data-account-line]").hidden = false;
+    }
+    const box = document.querySelector("[data-billing]");
+    const buttons = Array.from(box.querySelectorAll("[data-bill]"));
+    const thumb = box.querySelector(".billing-thumb");
+    const pay = document.querySelector("[data-checkout]");
+    const soon = document.querySelector("[data-soon]");
+    function choose(key) {
+      const button = buttons.find((b) => b.dataset.bill === key);
+      buttons.forEach((b) => b.setAttribute("aria-checked", String(b === button)));
+      thumb.style.left = button.offsetLeft + "px";
+      thumb.style.width = button.offsetWidth + "px";
+      [document.querySelector("[data-price]").textContent,
+       document.querySelector("[data-per]").textContent,
+       document.querySelector("[data-price-note]").textContent] = PLANS[key];
+      const link = CHECKOUT[key];
+      pay.hidden = !(link && account);
+      soon.hidden = !!(link && account);
+      if (link && account) pay.href = link.replace("{account}", encodeURIComponent(account));
+    }
+    buttons.forEach((b) => b.addEventListener("click", () => choose(b.dataset.bill)));
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => choose("year"));
+  })();
+</script>
+</body>
+</html>
