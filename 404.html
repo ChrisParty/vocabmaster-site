@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not in our dictionary — VocabMaster</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0f16">
+<!-- Served for any missing address, at any depth: everything is inline so
+     nothing here depends on where the page was asked for. -->
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px;
+    background: radial-gradient(60vmax 60vmax at 70% 10%, rgba(59,130,246,.16), transparent 60%), #0b0f16;
+    color: #f0f6fc; font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .card { width: min(560px, 100%); padding: 34px 36px; border-radius: 22px; color: #101a36;
+    background:
+      linear-gradient(rgba(239,68,68,.45), rgba(239,68,68,.45)) 0 124px / 100% 1px no-repeat,
+      repeating-linear-gradient(to bottom, transparent 0 33px, rgba(59,130,246,.13) 33px 34px) 0 158px / 100% calc(100% - 158px) no-repeat,
+      linear-gradient(165deg, #f8f9fc, #eef1f7);
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,.85); transform: rotate(-1.5deg); }
+  .head { font: 600 44px/1.1 Georgia, "Times New Roman", serif; letter-spacing: -.01em; }
+  .say { font: italic 18px Georgia, serif; color: #4b5674; margin: 6px 0 34px; }
+  ol { margin: 0 0 26px; padding-left: 22px; }
+  li { margin: 6px 0; }
+  li::marker { color: #3b82f6; font-weight: 700; }
+  a { display: inline-block; padding: 12px 20px; border-radius: 12px; color: #fff; text-decoration: none; font-weight: 600;
+    background: linear-gradient(180deg, #4d8ff8, #2f6fe8); box-shadow: 0 10px 30px -10px rgba(59,130,246,.7); }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="head">four-oh-four</div>
+    <p class="say">/ˌfɔːr oʊ ˈfɔːr/ &nbsp;<i>n.</i></p>
+    <ol>
+      <li>A page that isn't in our dictionary.</li>
+      <li>A small nudge back to where the words are.</li>
+    </ol>
+    <a href="/" data-home>Back to VocabMaster →</a>
+  </main>
+  <script>
+    // On GitHub Pages the site lives under /<repository>/; elsewhere at /.
+    if (location.hostname.endsWith("github.io")) {
+      var first = location.pathname.split("/")[1];
+      if (first) document.querySelector("[data-home]").href = "/" + first + "/";
+    }
+  </script>
+</body>
+</html>

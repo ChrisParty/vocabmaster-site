@@ -1,6 +1,559 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VocabMaster</title><link rel="stylesheet" href="style.css"></head><body><main>
-<h1>VocabMaster</h1><p class="muted">Spaced-repetition vocabulary trainer for the desktop.</p>
-<p>VocabMaster is a local-first app: your words, your progress and your card pictures live in a database on your own computer. If you choose to keep two computers in step, the app mirrors that data into a hidden folder of <em>your own</em> Google Drive — nobody else's server is involved.</p>
-<h2>How it learns with you</h2><ul><li>SM-2 spaced repetition: each card gets its own schedule.</li><li>Flashcards and multiple-choice quizzes, memory hooks, optional AI-drawn pictures.</li><li>Works fully offline; the cloud is optional.</li></ul>
-<p><a href="privacy.html">Privacy policy</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VocabMaster — learn words that stay</title>
+<meta name="description" content="A vocabulary trainer for Windows and Mac. Every new word gets a memory trick, a real example and a reading you can say — then comes back just before you'd forget it. Korean, Japanese, Greek, Swedish and English. 7 days free.">
+<meta name="theme-color" content="#0b0f16">
+<link rel="canonical" href="https://chrisparty.github.io/vocabmaster-site/">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VocabMaster — learn words that stay">
+<meta property="og:description" content="Memory tricks, real examples and reviews timed just before you'd forget. Korean, Japanese, Greek, Swedish and English. 7 days free.">
+<meta property="og:image" content="https://chrisparty.github.io/vocabmaster-site/assets/img/og.png">
+<meta property="og:url" content="https://chrisparty.github.io/vocabmaster-site/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="assets/fonts/fraunces-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "VocabMaster",
+  "operatingSystem": "Windows, macOS",
+  "applicationCategory": "EducationalApplication",
+  "description": "A vocabulary trainer with memory tricks, real examples and spaced repetition. Korean, Japanese, Greek, Swedish and English.",
+  "offers": [
+    {"@type": "Offer", "name": "Pro, monthly", "price": "99", "priceCurrency": "SEK"},
+    {"@type": "Offer", "name": "Pro, yearly", "price": "799", "priceCurrency": "SEK"}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"></div>
+<canvas class="glyphs" aria-hidden="true"></canvas>
+
+<!-- Flags and icons, drawn once (Windows browsers draw no flag emoji). -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="flag-ko" viewBox="-36 -24 72 48">
+    <rect x="-36" y="-24" width="72" height="48" fill="#fff"/>
+    <g transform="rotate(-56.31)">
+      <path d="M-12 0a12 12 0 0 1 24 0z" fill="#cd2e3a"/>
+      <path d="M12 0a12 12 0 0 1-24 0z" fill="#0047a0"/>
+      <circle cx="-6" r="6" fill="#cd2e3a"/><circle cx="6" r="6" fill="#0047a0"/>
+    </g>
+    <g fill="#000">
+      <g transform="translate(-21 -14) rotate(-56.31)"><rect x="-6" y="-4.5" width="12" height="2"/><rect x="-6" y="-1" width="12" height="2"/><rect x="-6" y="2.5" width="12" height="2"/></g>
+      <g transform="translate(21 14) rotate(-56.31)"><rect x="-6" y="-4.5" width="5.4" height="2"/><rect x=".6" y="-4.5" width="5.4" height="2"/><rect x="-6" y="-1" width="5.4" height="2"/><rect x=".6" y="-1" width="5.4" height="2"/><rect x="-6" y="2.5" width="5.4" height="2"/><rect x=".6" y="2.5" width="5.4" height="2"/></g>
+      <g transform="translate(21 -14) rotate(56.31)"><rect x="-6" y="-4.5" width="5.4" height="2"/><rect x=".6" y="-4.5" width="5.4" height="2"/><rect x="-6" y="-1" width="12" height="2"/><rect x="-6" y="2.5" width="5.4" height="2"/><rect x=".6" y="2.5" width="5.4" height="2"/></g>
+      <g transform="translate(-21 14) rotate(56.31)"><rect x="-6" y="-4.5" width="12" height="2"/><rect x="-6" y="-1" width="5.4" height="2"/><rect x=".6" y="-1" width="5.4" height="2"/><rect x="-6" y="2.5" width="12" height="2"/></g>
+    </g>
+  </symbol>
+  <symbol id="flag-ja" viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#bc002d"/></symbol>
+  <symbol id="flag-el" viewBox="0 0 27 18">
+    <rect width="27" height="18" fill="#0d5eaf"/>
+    <path d="M0 3h27M0 7h27M0 11h27M0 15h27" stroke="#fff" stroke-width="2"/>
+    <rect width="10" height="10" fill="#0d5eaf"/>
+    <path d="M5 0v10M0 5h10" stroke="#fff" stroke-width="2"/>
+  </symbol>
+  <symbol id="flag-sv" viewBox="0 0 16 10"><rect width="16" height="10" fill="#006aa7"/><rect x="5" width="2" height="10" fill="#fecc00"/><rect y="4" width="16" height="2" fill="#fecc00"/></symbol>
+  <symbol id="flag-en" viewBox="0 0 60 30">
+    <clipPath id="uk-clip"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath>
+    <rect width="60" height="30" fill="#012169"/>
+    <path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/>
+    <path d="M0 0l60 30M60 0L0 30" clip-path="url(#uk-clip)" stroke="#c8102e" stroke-width="4"/>
+    <path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/>
+    <path d="M30 0v30M0 15h60" stroke="#c8102e" stroke-width="6"/>
+  </symbol>
+  <symbol id="i-windows" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.5 10.5 4.5v7H3zM11.5 4.4 21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.4z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.4-1-2.4-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.9-1.4z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM6 11a6 6 0 0 0 12 0M12 17v4"/></symbol>
+</svg>
+
+<header class="nav" data-nav>
+  <a class="brand" href="#top" aria-label="VocabMaster, back to the top">
+    <img src="assets/img/icon-64.png" alt="" width="34" height="34">
+    <span>VocabMaster</span>
+  </a>
+  <nav class="nav-links" aria-label="Main" data-nav-links>
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#languages">Languages</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">Questions</a>
+  </nav>
+  <a class="btn btn-primary btn-small nav-cta" href="#download" data-download>
+    <svg class="ico"><use href="#i-download"/></svg><span>Download</span>
+  </a>
+  <button class="nav-toggle" type="button" aria-label="Open the menu" aria-expanded="false" data-nav-toggle>
+    <span></span><span></span>
+  </button>
+</header>
+
+<main id="main">
+
+<!-- ============================================================ hero -->
+<section class="hero" id="top">
+  <div class="hero-ruled" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="pill reveal"><span class="pulse-dot"></span> For Windows &amp; Mac · try it free for 7 days</p>
+      <h1 class="reveal">
+        Learn <span class="morph" data-morph><span class="morph-word">words</span><span class="morph-reading" aria-hidden="true">&nbsp;</span></span><br>
+        that <em class="stay">stay<svg class="stay-underline" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14C40 5 90 4 197 10"/></svg></em>.
+      </h1>
+      <p class="lede reveal">VocabMaster gives every new word a memory trick, a real example and a way to read it — then brings it back just before you'd forget it. Ten minutes a day, and the words are still there next year.</p>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary btn-big" href="#download" data-download>
+          <svg class="ico" data-os-icon><use href="#i-windows"/></svg>
+          <span data-os-label>Download for Windows</span>
+        </a>
+        <a class="btn btn-ghost" href="#download" data-download-other>
+          <svg class="ico" data-other-icon><use href="#i-apple"/></svg>
+          <span data-other-label>Also for Mac</span>
+        </a>
+      </div>
+      <p class="fine reveal"><svg class="ico ico-tiny"><use href="#i-check"/></svg> 7 days free, everything included <span class="sep">·</span> no card needed <span class="sep">·</span> <span data-version>latest version</span></p>
+    </div>
+
+    <div class="hero-demo reveal" id="demo">
+      <div class="demo-stage" data-demo>
+        <div class="demo-shadow s2" aria-hidden="true"></div>
+        <div class="demo-shadow s1" aria-hidden="true"></div>
+        <div class="flashcard" data-card tabindex="0" role="button" aria-label="Flashcard: press to show the answer">
+          <div class="flashcard-inner">
+            <div class="face front">
+              <div class="face-top"><span class="lang" data-f="lang"></span><span class="count" data-f="count"></span></div>
+              <div class="front-word"><div class="word" data-f="word"></div><div class="reading" data-f="reading"></div></div>
+              <div class="hint"><span class="kbd">Space</span> or tap to see the answer</div>
+            </div>
+            <div class="face back">
+              <div class="back-head"><span class="word-small" data-f="word2"></span><span class="reading-small" data-f="reading2"></span><span class="type" data-f="type"></span></div>
+              <p class="meaning" data-f="meaning"></p>
+              <div class="tr-row"><svg class="flag-mini"><use data-f="trflag" href="#flag-en"/></svg><span data-f="translation"></span></div>
+              <blockquote class="example"><span class="ex-t" data-f="example"></span><span class="ex-reading" data-f="exReading"></span><span class="ex-tr" data-f="exTr"></span></blockquote>
+              <div class="trick"><span class="trick-label">Memory trick</span><span data-f="trick"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="toast" data-toast role="status" aria-live="polite"></div>
+        <div class="demo-done" data-done hidden>
+          <div class="medal medal-gold" aria-hidden="true"><span>5</span></div>
+          <p class="done-title">Round done ✓</p>
+          <p class="done-sub">Five words in five languages. Each one comes back on its own day.</p>
+          <div class="done-actions">
+            <a class="btn btn-primary" href="#download" data-download>Get VocabMaster</a>
+            <button class="btn btn-ghost" type="button" data-restart>Again</button>
+          </div>
+        </div>
+      </div>
+      <div class="rate-row" data-rate aria-label="How well did you know it?">
+        <button type="button" class="rate again" data-r="0"><b>Again</b><span>soon</span></button>
+        <button type="button" class="rate hard" data-r="1"><b>Hard</b><span>in 3 days</span></button>
+        <button type="button" class="rate good" data-r="2"><b>Good</b><span>in 1 week</span></button>
+        <button type="button" class="rate easy" data-r="3"><b>Easy</b><span>in 2 weeks</span></button>
+      </div>
+      <p class="demo-caption">Try it — these are real cards. <span class="kbd">1</span>–<span class="kbd">4</span> to rate.</p>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#how" aria-label="Scroll to how it works"><span></span></a>
+</section>
+
+<!-- ============================================================ marquee -->
+<div class="marquee" aria-label="Words in many languages">
+  <div class="marquee-track" data-marquee>
+    <span><b>사랑</b> love</span><span><b>友達</b> friend</span><span><b>θάλασσα</b> sea</span><span><b>fika</b> coffee break</span><span><b>별</b> star</span><span><b>桜</b> cherry blossom</span><span><b>φως</b> light</span><span><b>lagom</b> just right</span><span><b>serendipity</b> a lucky find</span><span><b>바다</b> sea</span><span><b>木漏れ日</b> sunlight through leaves</span><span><b>μεράκι</b> heart and soul</span><span><b>mys</b> cosiness</span><span><b>감사합니다</b> thank you</span><span><b>こんにちは</b> hello</span><span><b>ευχαριστώ</b> thank you</span>
+  </div>
+</div>
+
+<!-- ============================================================ the forgetting curve -->
+<section class="section curve" id="how">
+  <div class="wrap two-col">
+    <div class="col-text">
+      <p class="entry reveal"><b>spaced rep·e·ti·tion</b> <i>n.</i> — seeing a word again just before you would forget it.</p>
+      <h2 class="reveal">Your memory forgets on a schedule.<br><span class="muted-h">So VocabMaster reviews on one.</span></h2>
+      <p class="reveal">A new word fades within days. But every time you recall it just before it's gone, it lasts longer — tomorrow, then in three days, in a week, in a month. VocabMaster keeps that schedule for every single word, so each day you only see the ones you're about to lose.</p>
+      <ul class="checks reveal">
+        <li><svg class="ico"><use href="#i-check"/></svg><span>Four honest buttons: <b class="c-red">Again</b>, <b class="c-amber">Hard</b>, <b class="c-green">Good</b>, <b class="c-blue">Easy</b></span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span>Said in plain words: “comes back in 5 months”</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span>A daily goal and a streak — and never any guilt</span></li>
+      </ul>
+    </div>
+    <figure class="curve-figure reveal" data-curve>
+      <svg viewBox="0 0 800 380" role="img" aria-labelledby="curve-title">
+        <title id="curve-title">Without reviews a word is forgotten within days; each review at the right moment makes it last longer.</title>
+        <defs>
+          <linearGradient id="curve-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3b82f6" stop-opacity=".32"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g class="axis">
+          <line x1="60" y1="40" x2="60" y2="320"/><line x1="60" y1="320" x2="780" y2="320"/>
+          <line class="grid" x1="60" y1="180" x2="780" y2="180"/>
+          <text x="52" y="46" text-anchor="end">100%</text><text x="52" y="184" text-anchor="end">50%</text><text x="52" y="324" text-anchor="end">0</text>
+          <text x="60" y="348">today</text><text x="408" y="348" text-anchor="middle">1 week</text><text x="780" y="348" text-anchor="end">a month</text>
+        </g>
+        <path class="c-area" data-area fill="url(#curve-fill)"/>
+        <path class="c-forget" data-forget/>
+        <path class="c-memory" data-memory filter="url(#glow)"/>
+        <g data-marks></g>
+      </svg>
+      <figcaption><span class="legend l-forget"></span>without reviews <span class="legend l-memory"></span>with VocabMaster</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================ one word in, a whole card out -->
+<section class="section maker">
+  <div class="wrap two-col reverse">
+    <div class="col-text">
+      <p class="entry reveal"><b>card</b> <i>n.</i> — everything you need to own one word.</p>
+      <h2 class="reveal">Type one word.<br><span class="muted-h">Get a whole card.</span></h2>
+      <p class="reveal">Add a word — or a hundred common ones at your level — and VocabMaster's AI writes each card for you: what it means, how it's read, a translation into your language, a real example, words like it, and a memory trick that makes it stick.</p>
+      <p class="reveal small-note">From your first <b>water</b> and <b>friend</b> to <b>vicissitude</b>: four levels, beginner to expert. Never the same word twice.</p>
+    </div>
+    <div class="maker-demo reveal" data-maker>
+      <div class="maker-input">
+        <span class="maker-label">Add one word</span>
+        <div class="maker-field"><span data-typed></span><i class="caret"></i></div>
+        <span class="maker-btn" data-maker-btn><span class="spin"></span><span data-maker-btn-text>Write the card</span></span>
+      </div>
+      <div class="maker-card" aria-live="polite">
+        <div class="mk-row mk-head"><span class="mk-word" data-mk="word"></span><span class="mk-reading" data-mk="reading"></span><span class="mk-type" data-mk="type"></span></div>
+        <div class="mk-row"><span class="mk-k">Means</span><span class="mk-v" data-mk="meaning"></span></div>
+        <div class="mk-row"><span class="mk-k">Translation</span><span class="mk-v" data-mk="translation"></span></div>
+        <div class="mk-row"><span class="mk-k">Example</span><span class="mk-v"><span data-mk="example"></span><small data-mk="exTr"></small></span></div>
+        <div class="mk-row"><span class="mk-k">Similar</span><span class="mk-v" data-mk="similar"></span></div>
+        <div class="mk-row mk-trick"><span class="mk-k">Memory trick</span><span class="mk-v" data-mk="trick"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ features -->
+<section class="section features" id="features">
+  <div class="wrap">
+    <p class="entry center reveal"><b>flu·ent</b> <i>adj.</i> — able to read it, say it and use it.</p>
+    <h2 class="center reveal">Everything a new language needs.<br><span class="muted-h">Nothing it doesn't.</span></h2>
+
+    <div class="bento">
+      <article class="tile t-alpha reveal" data-spot>
+        <div class="tile-art alpha-art" aria-hidden="true">
+          <div class="hangul" data-hangul>
+            <span class="jamo j1">ㅎ</span><span class="plus">+</span><span class="jamo j2">ㅏ</span><span class="plus">+</span><span class="jamo j3">ㄴ</span>
+            <span class="eq">=</span><span class="block">한</span><span class="block-read">han</span>
+          </div>
+          <div class="kana">
+            <svg viewBox="0 0 109 109" data-kana></svg>
+            <span class="kana-label" data-kana-label></span>
+          </div>
+        </div>
+        <h3>Learn to read first</h3>
+        <p>Hangul in a few days, hiragana and katakana step by step with stroke order, and the Greek alphabet. Every word on every card comes with a way to read it.</p>
+      </article>
+
+      <article class="tile t-talk reveal" data-spot>
+        <div class="tile-art chat-art" data-chat aria-hidden="true">
+          <div class="bubble them"><b>어서 오세요! 뭐 드릴까요?</b><small>Welcome! What can I get you?</small></div>
+          <div class="bubble me">커피 한 잔 주세요.</div>
+          <div class="bubble tip">Perfect — 한 잔 = one cup ✓</div>
+          <div class="chat-mic"><svg class="ico"><use href="#i-mic"/></svg><span class="rings"></span></div>
+        </div>
+        <h3>Talk it through</h3>
+        <p>Order a coffee, meet a neighbour, ask the way. Answer by speaking or typing, with three ideas when you're stuck and a gentle “better:” when it could be smoother.</p>
+      </article>
+
+      <article class="tile t-story reveal" data-spot>
+        <div class="tile-art story-art" aria-hidden="true">
+          <p class="st-line"><mark>친구</mark>와 같이 <mark>밥</mark>을 먹어요.</p>
+          <p class="st-read">chinguwa gachi babeul meogeoyo.</p>
+          <p class="st-tr">He has a meal together with his friend.</p>
+        </div>
+        <h3>A story from your words</h3>
+        <p>Every day, a short story written mostly from words you've studied — with readings, translations and three quick questions.</p>
+      </article>
+
+      <article class="tile t-say reveal" data-spot>
+        <div class="tile-art say-art" aria-hidden="true">
+          <div class="wave" data-wave></div>
+          <p class="heard"><svg class="ico"><use href="#i-check"/></svg> Heard: <b>감사합니다</b></p>
+        </div>
+        <h3>Say it</h3>
+        <p>Say the word on the card and hear back whether it was understood.</p>
+      </article>
+
+      <article class="tile t-quiz reveal" data-spot>
+        <div class="tile-art quiz-art" data-quiz aria-hidden="true">
+          <p class="q">θάλασσα <small>thálassa</small></p>
+          <div class="opts"><span class="opt">mountain</span><span class="opt right">sea</span><span class="opt">bread</span></div>
+        </div>
+        <h3>Quizzes three ways</h3>
+        <p>Pick the meaning, type the word, or listen and choose — with å ä ö buttons when your keyboard lacks them.</p>
+      </article>
+
+      <article class="tile t-badges reveal" data-spot>
+        <div class="tile-art badge-art" aria-hidden="true">
+          <div class="medal medal-blue"><span>100</span></div>
+          <div class="streak"><span class="flame">🔥</span><b data-count="27">0</b><small>days in a row</small></div>
+          <div class="heat" data-heat></div>
+        </div>
+        <h3>Small wins, every day</h3>
+        <p>Streaks, a daily goal and 45 badges to earn — from your first word to a whole year. Miss a day? You get a warm welcome back, never a guilt trip.</p>
+      </article>
+
+      <article class="tile t-sentences reveal" data-spot>
+        <div class="tile-art sent-art" aria-hidden="true">
+          <p class="sent" data-sentence><span class="sent-t">Hur mycket kostar det?</span><span class="sent-m">How much does it cost?</span></p>
+        </div>
+        <h3>Everyday sentences</h3>
+        <p>The phrases people actually say, explained word by word — beside your words, at your level.</p>
+      </article>
+
+      <article class="tile t-doctor reveal" data-spot>
+        <div class="tile-art doctor-art" aria-hidden="true">
+          <span class="stuck">피곤하다 · pigonhada <i>forgotten 3×</i></span>
+          <span class="rx">New trick: “pi-GON-hada — all your energy is GONE.”</span>
+        </div>
+        <h3>The word doctor</h3>
+        <p>A word you keep forgetting gets a fresh memory trick, a look-alike to tell it apart from, and a two-line story.</p>
+      </article>
+
+      <article class="tile t-sync reveal" data-spot>
+        <div class="tile-art sync-art" aria-hidden="true">
+          <span class="pc"></span><span class="sync-dots"><i></i><i></i><i></i></span><span class="pc"></span>
+        </div>
+        <h3>Offline. Yours. On two computers.</h3>
+        <p>Study anywhere, even without internet. Your words live on your computer — and stay in step through your own Google Drive if you use two.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ screens -->
+<section class="section screens" id="screens">
+  <div class="wrap">
+    <p class="entry center reveal"><b>see</b> <i>v.</i> — to look at it for real.</p>
+    <h2 class="center reveal">Beautifully simple.<br><span class="muted-h">Clear at a glance, at any age.</span></h2>
+    <div class="tabs reveal" role="tablist" aria-label="Screens of the app" data-tabs>
+      <button role="tab" aria-selected="true" data-shot="study-back">Study</button>
+      <button role="tab" aria-selected="false" data-shot="story">Story</button>
+      <button role="tab" aria-selected="false" data-shot="talk">Talk</button>
+      <button role="tab" aria-selected="false" data-shot="alphabet">Alphabet</button>
+      <button role="tab" aria-selected="false" data-shot="stats">Progress</button>
+      <button role="tab" aria-selected="false" data-shot="celebration">Badges</button>
+    </div>
+    <div class="window reveal" data-window>
+      <div class="window-bar"><span class="wb-title"><img src="assets/img/favicon-32.png" alt="" width="14" height="14"> VocabMaster</span><span class="wb-ctl"><i></i><i></i><i></i></span></div>
+      <div class="window-body">
+        <img data-shot-img src="assets/img/shots/study-back-1280.webp"
+             srcset="assets/img/shots/study-back-1280.webp 1280w, assets/img/shots/study-back.webp 2560w"
+             sizes="(max-width: 1100px) 100vw, 1060px" width="2560" height="1600"
+             alt="The study screen: the Korean word 친구 (chingu) with its meaning, an example and a memory trick" loading="lazy">
+      </div>
+      <div class="shot-progress" aria-hidden="true"><i data-shot-progress></i></div>
+    </div>
+    <p class="shot-caption reveal" data-shot-caption>Every card: the word, how it's read, what it means, a real example and a memory trick.</p>
+  </div>
+</section>
+
+<!-- ============================================================ languages -->
+<section class="section langs" id="languages">
+  <div class="wrap">
+    <p class="entry center reveal"><b>pol·y·glot</b> <i>n.</i> — someone with more than one language. Soon: you.</p>
+    <h2 class="center reveal">Five languages today.<br><span class="muted-h">Explained in yours.</span></h2>
+    <div class="lang-grid">
+      <article class="lang-card reveal" style="--hue: #cd2e3a">
+        <svg class="flag"><use href="#flag-ko"/></svg>
+        <p class="hello" lang="ko">안녕하세요</p><p class="hello-read">annyeonghaseyo</p>
+        <h3>Korean</h3><p class="lang-note">Hangul in days, a reading on every word</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #bc002d">
+        <svg class="flag"><use href="#flag-ja"/></svg>
+        <p class="hello" lang="ja">こんにちは</p><p class="hello-read">konnichiwa</p>
+        <h3>Japanese</h3><p class="lang-note">Kana first, kanji always with their reading</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #0d5eaf">
+        <svg class="flag"><use href="#flag-el"/></svg>
+        <p class="hello" lang="el">Γεια σας</p><p class="hello-read">yia sas</p>
+        <h3>Greek</h3><p class="lang-note">The alphabet first, then the words</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #fecc00">
+        <svg class="flag"><use href="#flag-sv"/></svg>
+        <p class="hello" lang="sv">Hej!</p><p class="hello-read">hey</p>
+        <h3>Swedish</h3><p class="lang-note">With å ä ö one click away</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #3b82f6">
+        <svg class="flag"><use href="#flag-en"/></svg>
+        <p class="hello" lang="en">Hello!</p><p class="hello-read">up to expert level</p>
+        <h3>English</h3><p class="lang-note">For school, exams and work</p>
+      </article>
+    </div>
+    <p class="center coming reveal">Learn one, explained in another — each language with its own words, streak and progress.<br><span class="soon">Coming next: Spanish · French · German · Italian · Portuguese</span></p>
+  </div>
+</section>
+
+<!-- ============================================================ levels -->
+<section class="section levels">
+  <div class="wrap">
+    <h2 class="center reveal">From your first words<br><span class="muted-h">to the ones that impress.</span></h2>
+    <div class="level-switch reveal" role="tablist" aria-label="Level" data-levels>
+      <span class="level-thumb" aria-hidden="true"></span>
+      <button role="tab" aria-selected="true" data-level="0"><b>Beginner</b><small>A1–A2</small></button>
+      <button role="tab" aria-selected="false" data-level="1"><b>Intermediate</b><small>B1–B2</small></button>
+      <button role="tab" aria-selected="false" data-level="2"><b>Advanced</b><small>C1</small></button>
+      <button role="tab" aria-selected="false" data-level="3"><b>Expert</b><small>C2</small></button>
+    </div>
+    <div class="level-words reveal" data-level-words aria-live="polite"></div>
+    <p class="center small-note reveal">Shown in English — every language has the same four levels, and you can mix them as you go.</p>
+  </div>
+</section>
+
+<!-- ============================================================ pricing -->
+<section class="section pricing" id="pricing">
+  <div class="wrap">
+    <p class="entry center reveal"><b>in·vest·ment</b> <i>n.</i> — less than a coffee a week.</p>
+    <h2 class="center reveal">Try everything for 7 days.<br><span class="muted-h">Then keep going with Pro.</span></h2>
+    <div class="billing reveal" role="radiogroup" aria-label="Billing" data-billing>
+      <span class="billing-thumb" aria-hidden="true"></span>
+      <button type="button" role="radio" aria-checked="false" data-bill="month">Monthly</button>
+      <button type="button" role="radio" aria-checked="true" data-bill="year">Yearly <span class="save">save 33%</span></button>
+    </div>
+    <div class="plans">
+      <article class="plan reveal">
+        <h3>Free trial</h3>
+        <p class="price"><b>0 kr</b><span>for 7 days</span></p>
+        <p class="plan-lede">Everything VocabMaster does, from the first minute. No card needed.</p>
+        <ul class="checks">
+          <li><svg class="ico"><use href="#i-check"/></svg><span>AI-written cards with memory tricks</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>A daily story and a conversation</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Say it, sentences, the word doctor</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Alphabets, quizzes and badges</span></li>
+        </ul>
+        <a class="btn btn-ghost btn-block" href="#download" data-download>Start free</a>
+      </article>
+      <article class="plan plan-pro reveal">
+        <span class="plan-flag">Recommended</span>
+        <h3>Pro</h3>
+        <p class="price"><b data-price>799 kr</b><span data-per>a year</span></p>
+        <p class="plan-lede" data-price-note>About 67 kr a month, paid once a year.</p>
+        <ul class="checks">
+          <li><svg class="ico"><use href="#i-check"/></svg><span>New AI-written words every day — up to 1,200 a month</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>A new story every day, two conversations a day</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Say it, sentences and fresh memory tricks</span></li>
+          <li><svg class="ico"><use href="#i-check"/></svg><span>Every language, on two computers</span></li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#download" data-download>Start with 7 days free</a>
+      </article>
+    </div>
+    <p class="forever reveal"><b>Free forever, after the trial too:</b> every word you've made, your reviews and quizzes, the alphabet, your streak and your badges. Nothing you learned is ever locked away.</p>
+  </div>
+</section>
+
+<!-- ============================================================ privacy -->
+<section class="section private">
+  <div class="wrap private-grid">
+    <div class="reveal">
+      <p class="entry"><b>pri·vate</b> <i>adj.</i> — yours, and nobody else's.</p>
+      <h2>Your words live on <em>your</em> computer.</h2>
+    </div>
+    <ul class="private-list">
+      <li class="reveal"><b>On your computer.</b> Your words, progress and streak are stored on your own computer — not in our cloud — and studying works offline.</li>
+      <li class="reveal"><b>Your own Drive.</b> Two computers? They stay in step through a hidden folder in your own Google Drive that only VocabMaster can see.</li>
+      <li class="reveal"><b>No ads, no tracking.</b> No analytics, no selling, no cookies — on this website either. <a href="privacy.html">The privacy page</a> says exactly what goes where.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ questions -->
+<section class="section faq" id="faq">
+  <div class="wrap narrow">
+    <h2 class="center reveal">Questions</h2>
+    <div class="faq-list">
+      <details class="reveal"><summary>Do I need to be online?</summary>
+        <p>Studying, quizzes, the alphabet and your progress all work without internet. New words, stories, conversations and Say it are written by the AI, so they need a connection.</p></details>
+      <details class="reveal"><summary>Which languages can I learn?</summary>
+        <p>Korean, Japanese, Greek, Swedish and English — each explained in any of the others. Spanish, French, German, Italian and Portuguese are next. You can learn several, each with its own words and progress.</p></details>
+      <details class="reveal"><summary>What happens after the 7 days?</summary>
+        <p>Choose Pro to keep the AI features. If you don't, nothing is lost: every word you made stays yours, and reviewing, quizzes, the alphabet, your streak and your badges stay free.</p></details>
+      <details class="reveal"><summary>How are the cards written?</summary>
+        <p>When you add a word, VocabMaster's AI writes the card for your level and your languages: the meaning, a translation, how it's read, a real example with its translation, similar words and a memory trick. Every card is checked to be in the right language, and you can edit anything.</p></details>
+      <details class="reveal"><summary>Can I use it on two computers?</summary>
+        <p>Yes. Connect your own Google Drive on both and they stay up to date. Or move everything in one file.</p></details>
+      <details class="reveal"><summary>Is there a phone app?</summary>
+        <p>Not yet. VocabMaster is made for Windows and Mac computers, where a real keyboard and a big screen make learning comfortable.</p></details>
+      <details class="reveal"><summary>Can I cancel?</summary>
+        <p>Any time. Pro is a subscription you can stop whenever you like, and everything you learned stays on your computer.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ download -->
+<section class="section final" id="download">
+  <div class="final-glow" aria-hidden="true"></div>
+  <div class="wrap center">
+    <img class="final-icon reveal" src="assets/img/icon-192.png" alt="" width="96" height="96">
+    <h2 class="reveal">Your next thousand words<br>start today.</h2>
+    <p class="lede reveal">Ten minutes a day. Free for the first seven.</p>
+    <div class="download-grid reveal">
+      <a class="dl-card" href="#download" data-dl="windows">
+        <svg class="ico ico-big"><use href="#i-windows"/></svg>
+        <span><b>Windows</b><small>Windows 10 and 11</small></span>
+        <svg class="ico"><use href="#i-download"/></svg>
+      </a>
+      <a class="dl-card" href="#download" data-dl="mac">
+        <svg class="ico ico-big"><use href="#i-apple"/></svg>
+        <span><b>Mac</b><small>macOS</small></span>
+        <svg class="ico"><use href="#i-download"/></svg>
+      </a>
+    </div>
+    <p class="fine reveal"><span data-version>latest version</span> <span class="sep">·</span> Linux is on the way</p>
+    <div class="mobile-note" data-mobile-note hidden>
+      <p>VocabMaster runs on Windows and Mac computers. Send this page to yourself and open it there.</p>
+      <button class="btn btn-ghost" type="button" data-share>Copy the link</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="#top"><img src="assets/img/icon-64.png" alt="" width="28" height="28"><span>VocabMaster</span></a>
+      <p class="muted">Words that stay.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#faq">Questions</a><a href="privacy.html">Privacy</a><a href="#download">Download</a>
+    </nav>
+    <p class="credits">Kana stroke order from <a href="https://kanjivg.tagaini.net/" rel="noopener">KanjiVG</a> (CC BY-SA 3.0). © <span data-year>2026</span> VocabMaster.</p>
+  </div>
+</footer>
+
+<dialog class="install" data-install aria-labelledby="install-title">
+  <form method="dialog"><button class="close" aria-label="Close">×</button></form>
+  <div class="install-head">
+    <img src="assets/img/icon-64.png" alt="" width="48" height="48">
+    <div><h2 id="install-title" data-install-title>Your download has started</h2><p class="muted" data-install-file></p></div>
+  </div>
+  <div class="install-os" role="tablist" aria-label="Your computer">
+    <button type="button" role="tab" data-os-tab="windows" aria-selected="true">Windows</button>
+    <button type="button" role="tab" data-os-tab="mac" aria-selected="false">Mac</button>
+  </div>
+  <ol class="steps" data-steps></ol>
+  <p class="install-foot">Nothing happened? <a href="#" data-retry>Download again</a>.</p>
+</dialog>
+
+<noscript><style>.reveal{opacity:1!important;transform:none!important}.rate-row,.demo-caption{display:none}</style></noscript>
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
