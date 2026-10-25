@@ -25,8 +25,11 @@ for an OpenAI key).
    it will be: a 7-day trial, Pro, no key. Today's download is still the
    friends' version.
 2. **Support e-mail** in `privacy.html` (the amber box under Contact).
-3. **Payments**: every "Start" button downloads the app. When checkout
-   exists, the Pro button can link to it (`index.html`, the `plan-pro` card).
+3. **Payments**: the app's Settings → Your plan → **Get Pro** opens
+   `pro.html?account=VM-…`. When the payment provider exists, put its two
+   checkout links in `CHECKOUT` at the bottom of `pro.html` (`{account}` is
+   replaced by the account number, so the payment reaches the right copy);
+   until then the page says payments open very soon. No app update needed.
 4. **Domain**: if the site moves to its own domain, change the four
    `chrisparty.github.io/vocabmaster-site` addresses in `index.html` (canonical,
    og:url, og:image) and `SITE` at the top of `assets/js/site.js`.
