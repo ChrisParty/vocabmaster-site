@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VocabMaster — learn words that stay</title>
-<meta name="description" content="A vocabulary trainer for Windows and Mac. Every new word gets a memory trick, a real example and a reading you can say — then comes back just before you'd forget it. Korean, Japanese, Greek, Swedish and English. 7 days free.">
+<meta name="description" content="A vocabulary trainer for Windows and Mac. Every new word gets a memory trick, a real example and a reading you can say — then comes back just before you'd forget it. Ten languages: Spanish, French, German, Italian, Portuguese, Swedish, Greek, Korean, Japanese and English. 7 days free.">
 <meta name="theme-color" content="#0b0f16">
 <link rel="canonical" href="https://chrisparty.github.io/vocabmaster-site/">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="VocabMaster — learn words that stay">
-<meta property="og:description" content="Memory tricks, real examples and reviews timed just before you'd forget. Korean, Japanese, Greek, Swedish and English. 7 days free.">
+<meta property="og:description" content="Memory tricks, real examples and reviews timed just before you'd forget. Ten languages, explained in yours. 7 days free.">
 <meta property="og:image" content="https://chrisparty.github.io/vocabmaster-site/assets/img/og.png">
 <meta property="og:url" content="https://chrisparty.github.io/vocabmaster-site/">
 <meta name="twitter:card" content="summary_large_image">
@@ -27,7 +27,7 @@
   "name": "VocabMaster",
   "operatingSystem": "Windows, macOS",
   "applicationCategory": "EducationalApplication",
-  "description": "A vocabulary trainer with memory tricks, real examples and spaced repetition. Korean, Japanese, Greek, Swedish and English.",
+  "description": "A vocabulary trainer with memory tricks, real examples and spaced repetition. Spanish, French, German, Italian, Portuguese, Swedish, Greek, Korean, Japanese and English.",
   "offers": [
     {"@type": "Offer", "name": "Pro, monthly", "price": "99", "priceCurrency": "SEK"},
     {"@type": "Offer", "name": "Pro, yearly", "price": "799", "priceCurrency": "SEK"}
@@ -63,6 +63,11 @@
     <rect width="10" height="10" fill="#0d5eaf"/>
     <path d="M5 0v10M0 5h10" stroke="#fff" stroke-width="2"/>
   </symbol>
+  <symbol id="flag-es" viewBox="0 0 30 20"><rect width="30" height="20" fill="#c60b1e"/><rect y="5" width="30" height="10" fill="#ffc400"/></symbol>
+  <symbol id="flag-fr" viewBox="0 0 30 20"><rect width="30" height="20" fill="#ef4135"/><rect width="20" height="20" fill="#fff"/><rect width="10" height="20" fill="#0055a4"/></symbol>
+  <symbol id="flag-de" viewBox="0 0 30 18"><rect width="30" height="18" fill="#ffce00"/><rect width="30" height="12" fill="#dd0000"/><rect width="30" height="6" fill="#111"/></symbol>
+  <symbol id="flag-it" viewBox="0 0 30 20"><rect width="30" height="20" fill="#ce2b37"/><rect width="20" height="20" fill="#fff"/><rect width="10" height="20" fill="#009246"/></symbol>
+  <symbol id="flag-pt" viewBox="0 0 30 20"><rect width="30" height="20" fill="#ff0000"/><rect width="12" height="20" fill="#006600"/><circle cx="12" cy="10" r="4.2" fill="#ffcc00"/><circle cx="12" cy="10" r="2.6" fill="#ff0000"/><circle cx="12" cy="10" r="1.6" fill="#fff"/></symbol>
   <symbol id="flag-sv" viewBox="0 0 16 10"><rect width="16" height="10" fill="#006aa7"/><rect x="5" width="2" height="10" fill="#fecc00"/><rect y="4" width="16" height="2" fill="#fecc00"/></symbol>
   <symbol id="flag-en" viewBox="0 0 60 30">
     <clipPath id="uk-clip"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath>
@@ -171,7 +176,7 @@
 <!-- ============================================================ marquee -->
 <div class="marquee" aria-label="Words in many languages">
   <div class="marquee-track" data-marquee>
-    <span><b>사랑</b> love</span><span><b>友達</b> friend</span><span><b>θάλασσα</b> sea</span><span><b>fika</b> coffee break</span><span><b>별</b> star</span><span><b>桜</b> cherry blossom</span><span><b>φως</b> light</span><span><b>lagom</b> just right</span><span><b>serendipity</b> a lucky find</span><span><b>바다</b> sea</span><span><b>木漏れ日</b> sunlight through leaves</span><span><b>μεράκι</b> heart and soul</span><span><b>mys</b> cosiness</span><span><b>감사합니다</b> thank you</span><span><b>こんにちは</b> hello</span><span><b>ευχαριστώ</b> thank you</span>
+    <span><b>사랑</b> love</span><span><b>友達</b> friend</span><span><b>θάλασσα</b> sea</span><span><b>fika</b> coffee break</span><span><b>별</b> star</span><span><b>桜</b> cherry blossom</span><span><b>φως</b> light</span><span><b>lagom</b> just right</span><span><b>serendipity</b> a lucky find</span><span><b>바다</b> sea</span><span><b>木漏れ日</b> sunlight through leaves</span><span><b>μεράκι</b> heart and soul</span><span><b>mys</b> cosiness</span><span><b>감사합니다</b> thank you</span><span><b>こんにちは</b> hello</span><span><b>ευχαριστώ</b> thank you</span><span><b>saudade</b> longing</span><span><b>Fernweh</b> wanderlust</span><span><b>flâner</b> to stroll</span><span><b>sobremesa</b> lingering at the table</span><span><b>dolce far niente</b> sweet idleness</span>
   </div>
 </div>
 
@@ -370,7 +375,7 @@
 <section class="section langs" id="languages">
   <div class="wrap">
     <p class="entry center reveal"><b>pol·y·glot</b> <i>n.</i> — someone with more than one language. Soon: you.</p>
-    <h2 class="center reveal">Five languages today.<br><span class="muted-h">Explained in yours.</span></h2>
+    <h2 class="center reveal">Ten languages.<br><span class="muted-h">Explained in yours.</span></h2>
     <div class="lang-grid">
       <article class="lang-card reveal" style="--hue: #cd2e3a">
         <svg class="flag"><use href="#flag-ko"/></svg>
@@ -392,13 +397,38 @@
         <p class="hello" lang="sv">Hej!</p><p class="hello-read">hey</p>
         <h3>Swedish</h3><p class="lang-note">With å ä ö one click away</p>
       </article>
+      <article class="lang-card reveal" style="--hue: #c60b1e">
+        <svg class="flag"><use href="#flag-es"/></svg>
+        <p class="hello" lang="es">¡Hola!</p><p class="hello-read">OH-lah</p>
+        <h3>Spanish</h3><p class="lang-note">Every noun with its el or la</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #0055a4">
+        <svg class="flag"><use href="#flag-fr"/></svg>
+        <p class="hello" lang="fr">Bonjour</p><p class="hello-read">bon-ZHOOR</p>
+        <h3>French</h3><p class="lang-note">Le, la, l' — learned with each word</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #ffce00">
+        <svg class="flag"><use href="#flag-de"/></svg>
+        <p class="hello" lang="de">Hallo!</p><p class="hello-read">HAH-loh</p>
+        <h3>German</h3><p class="lang-note">Der, die, das — learned with each noun</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #009246">
+        <svg class="flag"><use href="#flag-it"/></svg>
+        <p class="hello" lang="it">Ciao!</p><p class="hello-read">chow</p>
+        <h3>Italian</h3><p class="lang-note">Every noun with its article</p>
+      </article>
+      <article class="lang-card reveal" style="--hue: #006600">
+        <svg class="flag"><use href="#flag-pt"/></svg>
+        <p class="hello" lang="pt">Olá!</p><p class="hello-read">oh-LAH</p>
+        <h3>Portuguese</h3><p class="lang-note">With ã, õ and ç one click away</p>
+      </article>
       <article class="lang-card reveal" style="--hue: #3b82f6">
         <svg class="flag"><use href="#flag-en"/></svg>
         <p class="hello" lang="en">Hello!</p><p class="hello-read">up to expert level</p>
         <h3>English</h3><p class="lang-note">For school, exams and work</p>
       </article>
     </div>
-    <p class="center coming reveal">Learn one, explained in another — each language with its own words, streak and progress.<br><span class="soon">Coming next: Spanish · French · German · Italian · Portuguese</span></p>
+    <p class="center coming reveal">Learn one, explained in another — each language with its own words, streak and progress.</p>
   </div>
 </section>
 
@@ -482,7 +512,7 @@
       <details class="reveal"><summary>Do I need to be online?</summary>
         <p>Studying, quizzes, the alphabet and your progress all work without internet. New words, stories, conversations and Say it are written by the AI, so they need a connection.</p></details>
       <details class="reveal"><summary>Which languages can I learn?</summary>
-        <p>Korean, Japanese, Greek, Swedish and English — each explained in any of the others. Spanish, French, German, Italian and Portuguese are next. You can learn several, each with its own words and progress.</p></details>
+        <p>Spanish, French, German, Italian, Portuguese, Swedish, Greek, Korean, Japanese and English — each explained in any of the others. You can learn several, each with its own words and progress.</p></details>
       <details class="reveal"><summary>What happens after the 7 days?</summary>
         <p>Choose Pro to keep the AI features. If you don't, nothing is lost: every word you made stays yours, and reviewing, quizzes, the alphabet, your streak and your badges stay free.</p></details>
       <details class="reveal"><summary>How are the cards written?</summary>
