@@ -26,10 +26,14 @@ for an OpenAI key).
    friends' version.
 2. **Support e-mail** in `privacy.html` (the amber box under Contact).
 3. **Payments**: the app's Settings → Your plan → **Get Pro** opens
-   `pro.html?account=VM-…`. When the payment provider exists, put its two
-   checkout links in `CHECKOUT` at the bottom of `pro.html` (`{account}` is
-   replaced by the account number, so the payment reaches the right copy);
-   until then the page says payments open very soon. No app update needed.
+   `pro.html?account=VM-…`. When the payment provider exists, fill in the
+   bottom of `pro.html`: Lemon Squeezy → its two checkout links in `CHECKOUT`,
+   each ending `?checkout[custom][account]={account}`; Paddle → `PADDLE` (the
+   client-side token and the two price ids). Either way the account number
+   travels with the payment and the server's signed webhook
+   (`/v1/billing/lemonsqueezy` or `/v1/billing/paddle`, see the app repo's
+   NOW.md) turns that account Pro. Until then the page says payments open
+   very soon. No app update needed.
 4. **Domain**: if the site moves to its own domain, change the four
    `chrisparty.github.io/vocabmaster-site` addresses in `index.html` (canonical,
    og:url, og:image) and `SITE` at the top of `assets/js/site.js`.

@@ -66,10 +66,15 @@
 
 <script>
   // Opened by the app (Settings → Your plan → Get Pro) as pro.html?account=VM-XXXXXX.
-  // CHECKOUT: the payment provider's checkout links once there is one —
-  // "{account}" is replaced by the account number, so the payment finds its
-  // way to the right copy of VocabMaster. Empty: "payments open very soon".
+  // The payment provider, once there is one (fill in one of the two):
+  // CHECKOUT — Lemon Squeezy: its two checkout links, each ending in
+  //   ?checkout[custom][account]={account}   ("{account}" becomes the number,
+  //   so the payment finds its way to the right copy of VocabMaster).
+  // PADDLE — Paddle: the client-side token and the two price ids; the checkout
+  //   opens over this page with the account number as custom data.
+  // Both empty: "payments open very soon".
   const CHECKOUT = { month: "", year: "" };
+  const PADDLE = { token: "", month: "", year: "" };
   const PLANS = {
     month: ["99 kr", "a month", "Cancel any time. Your words stay yours."],
     year: ["799 kr", "a year", "About 67 kr a month, paid once a year."],
@@ -95,9 +100,28 @@
        document.querySelector("[data-per]").textContent,
        document.querySelector("[data-price-note]").textContent] = PLANS[key];
       const link = CHECKOUT[key];
-      pay.hidden = !(link && account);
-      soon.hidden = !!(link && account);
-      if (link && account) pay.href = link.replace("{account}", encodeURIComponent(account));
+      const ready = !!(account && (link || (PADDLE.token && PADDLE[key])));
+      pay.hidden = !ready;
+      soon.hidden = ready;
+      pay.dataset.bill = key;
+      pay.href = link && account ? link.replace("{account}", encodeURIComponent(account)) : "#";
+    }
+    if (PADDLE.token && account) {
+      const script = document.createElement("script");
+      script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+      script.onload = () => {
+        if (PADDLE.token.startsWith("test_")) window.Paddle.Environment.set("sandbox");
+        window.Paddle.Initialize({ token: PADDLE.token });
+      };
+      document.head.appendChild(script);
+      pay.addEventListener("click", (event) => {
+        const price = PADDLE[pay.dataset.bill];
+        if (CHECKOUT[pay.dataset.bill] || !price) return;
+        event.preventDefault();
+        if (window.Paddle) {
+          window.Paddle.Checkout.open({ items: [{ priceId: price, quantity: 1 }], customData: { account } });
+        }
+      });
     }
     buttons.forEach((b) => b.addEventListener("click", () => choose(b.dataset.bill)));
     (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => choose("year"));
