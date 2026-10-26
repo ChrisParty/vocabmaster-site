@@ -24,7 +24,13 @@ for an OpenAI key).
 1. **Release 1.4.0 and the installer first.** The page sells the product as
    it will be: a 7-day trial, Pro, no key. Today's download is still the
    friends' version.
-2. **Support e-mail** in `privacy.html` (the amber box under Contact).
+2. **Support e-mail** in `privacy.html` and `terms.html` (the amber boxes
+   under Contact), **who sells it** (your name or business name, "Who we
+   are" in `terms.html`) and **the payment provider's name** (Paddle or
+   Lemon Squeezy: `terms.html` → Payment, `privacy.html` → Paying for Pro).
+   The terms promise a full refund within 14 days of any payment and Swedish
+   law — read them before launch; payment providers check that a refund
+   policy and terms are on the site.
 3. **Payments**: the app's Settings → Your plan → **Get Pro** opens
    `pro.html?account=VM-…`. When the payment provider exists, fill in the
    bottom of `pro.html`: Lemon Squeezy → its two checkout links in `CHECKOUT`,
@@ -62,7 +68,8 @@ Then remove the second working copy: `git worktree remove ..\vocabmaster-website
 | | |
 |---|---|
 | `index.html` | the page: hero with a live flashcard, the forgetting curve, a card writing itself, features, screenshots, languages, levels, pricing, privacy, questions, download |
-| `privacy.html` | rewritten for 1.4.0: the account, the server, what passes through to OpenAI, what is never kept |
+| `privacy.html` | rewritten for 1.4.0: the account, the server, what passes through to OpenAI, what is never kept, paying for Pro |
+| `terms.html` | terms and refunds (`#refunds`): trial, Pro, payment through the reseller, cancelling, 14-day money back, fair use, the app itself |
 | `404.html` | "four-oh-four, n." — self-contained, works at any depth |
 | `assets/css/site.css`, `assets/js/site.js` | all of it, no libraries, no tracking; animations stop for "reduce motion" |
 | `assets/css/fonts.css`, `assets/fonts/` | Fraunces and Inter, served from the site itself (no Google request from a visitor) |
