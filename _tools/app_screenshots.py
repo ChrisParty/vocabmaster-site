@@ -1,6 +1,6 @@
 """The app screenshots on the website, made again from the app's own code.
 
-    python _tools/app_screenshots.py <VocabMaster checkout>/vocabmaster
+    python _tools/app_screenshots.py <app checkout>/vocabmaster   (Desktop\VocabMaster-release)
 
 A made-up learner ("Anna", Korean, five weeks in) in a throwaway folder —
 never anyone's real words. The cards are the app's own sample deck; the

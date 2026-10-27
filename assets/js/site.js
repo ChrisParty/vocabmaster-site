@@ -1,4 +1,4 @@
-/* VocabMaster — the website. Plain JavaScript, no libraries, no tracking.
+/* SweetVocab — the website. Plain JavaScript, no libraries, no tracking.
    Everything that moves is decoration: with prefers-reduced-motion it stands
    still, and without JavaScript the page still reads top to bottom. */
 (() => {
@@ -8,7 +8,7 @@
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const SITE = "https://chrisparty.github.io/vocabmaster-site/";
+  const SITE = "https://sweetvocab.com/";
 
   /* ================================================================ which computer */
 
@@ -44,19 +44,19 @@
 
   const STEPS = {
     setup: [
-      "<b>Open VocabMaster-Setup</b> from your downloads.",
-      "If Windows says <b>“Windows protected your PC”</b>, choose <b>More info → Run anyway</b>.<small>VocabMaster is new, so Windows doesn't know it yet.</small>",
-      "<b>VocabMaster opens.</b> Pick the language you want to learn — your 7 free days start now.",
+      "<b>Open SweetVocab-Setup</b> from your downloads.",
+      "If Windows says <b>“Windows protected your PC”</b>, choose <b>More info → Run anyway</b>.<small>SweetVocab is new, so Windows doesn't know it yet.</small>",
+      "<b>SweetVocab opens.</b> Pick the language you want to learn — your 7 free days start now.",
     ],
     zip: [
       "<b>Unzip it:</b> right-click the downloaded file → <b>Extract All</b>.",
       "In the new folder, double-click <b>setup-windows</b>.<small>If Windows says “Windows protected your PC”: More info → Run anyway. It sets up everything it needs in about a minute.</small>",
-      "<b>VocabMaster opens</b> and puts an icon on your Desktop. Pick the language you want to learn — your 7 free days start now.",
+      "<b>SweetVocab opens</b> and puts an icon on your Desktop. Pick the language you want to learn — your 7 free days start now.",
     ],
     mac: [
       "<b>Double-click the download</b> to unpack it.",
       "Right-click <b>setup-mac.command</b> → <b>Open</b> (only the first time).<small>It needs Python 3.11 or newer, free from python.org — the setup tells you if it's missing.</small>",
-      "<b>VocabMaster appears on your Desktop.</b> Open it and pick your language — your 7 free days start now.",
+      "<b>SweetVocab appears on your Desktop.</b> Open it and pick your language — your 7 free days start now.",
     ],
   };
 
@@ -128,7 +128,7 @@
     if (share) share.addEventListener("click", async () => {
       const url = location.href.split("#")[0];
       try {
-        if (navigator.share) await navigator.share({ title: "VocabMaster", url });
+        if (navigator.share) await navigator.share({ title: "SweetVocab", url });
         else { await navigator.clipboard.writeText(url); share.textContent = "Link copied ✓"; }
       } catch (err) { /* the person closed the share sheet */ }
     });
@@ -413,6 +413,17 @@
     const rateRow = $("[data-rate]");
     const toast = $("[data-toast]", stage);
     const done = $("[data-done]", stage);
+    const cat = $("[data-cat]", stage);
+    const hop = () => {
+      if (!cat || reduce) return;
+      cat.classList.remove("hop");
+      void cat.offsetWidth;
+      cat.classList.add("hop");
+    };
+    if (cat) {
+      cat.addEventListener("click", hop);
+      cat.addEventListener("animationend", (e) => { if (e.animationName === "cat-hop") cat.classList.remove("hop"); });
+    }
     const field = (name) => $(`[data-f="${name}"]`, card);
     let queue = [], current = null, flipped = false, busy = false, againOnce = new Set(), shown = 0, total = 0;
     const visible = watchVisible(stage);
@@ -470,6 +481,7 @@
       if (!flipped) { setFlipped(true); return; }
       busy = true;
       say(`<b>${current.word}</b> comes back ${WHEN[r]}${r === 3 ? " ✨" : ""}`);
+      if (r >= 2) hop();
       if (r === 0 && !againOnce.has(current.word)) { againOnce.add(current.word); queue.push(current); total += 1; }
       card.classList.add(`leave-${r}`);
       await sleep(reduce ? 50 : 560);
@@ -482,6 +494,7 @@
       rateRow.classList.add("waiting");
       $$(".demo-shadow", stage).forEach((s) => { s.style.opacity = "0"; });
       done.hidden = false;
+      hop();
       const box = stage.getBoundingClientRect();
       confetti(box.left + box.width / 2, box.top + box.height * 0.32);
     };
