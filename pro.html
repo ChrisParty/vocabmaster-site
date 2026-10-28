@@ -57,6 +57,8 @@
       <p class="plan-fine">Cancel any time · <a href="terms.html#refunds">money back within 14 days</a> · <a href="terms.html">terms</a></p>
     </article>
   </div>
+  <p class="soon-note" data-from-app hidden><b>Get Pro from the app:</b> open SweetVocab → Settings → Your plan → Get Pro. That brings your account number here, so Pro reaches your copy of SweetVocab.</p>
+  <p class="soon-note" data-thanks hidden><b>Thank you — Pro is on.</b> In SweetVocab, open Settings → Your plan: it says Pro within a minute. A receipt is on its way to your e-mail.</p>
   <p class="soon-note" data-soon><b>Payments open very soon.</b> Your words and your reviews stay free in the meantime — and your account number above is all we need to switch you to Pro.</p>
 </main>
 
@@ -75,9 +77,12 @@
   //   so the payment finds its way to the right copy of SweetVocab).
   // PADDLE — Paddle: the client-side token and the two price ids; the checkout
   //   opens over this page with the account number as custom data.
-  // Both empty: "payments open very soon".
+  // Both empty: "payments open very soon". Paddle since 2026-10-28 — SANDBOX
+  // (test_ token, test prices) until the live account is approved; then the
+  // live token and price ids here (and in the server's PADDLE_PRICES).
   const CHECKOUT = { month: "", year: "" };
-  const PADDLE = { token: "", month: "", year: "" };
+  const PADDLE = { token: "test_28d077c6f70037318fbbb5c7fe0", month: "pri_01m614yay8hzk002p4nkbgkeam",
+                   year: "pri_01m614yb3rbcwbmmgasezyantk" };
   const PLANS = {
     month: ["99 kr", "a month", "Cancel any time. Your words stay yours."],
     year: ["799 kr", "a year", "About 67 kr a month, paid once a year."],
@@ -94,6 +99,9 @@
     const thumb = box.querySelector(".billing-thumb");
     const pay = document.querySelector("[data-checkout]");
     const soon = document.querySelector("[data-soon]");
+    const fromApp = document.querySelector("[data-from-app]");
+    const thanks = document.querySelector("[data-thanks]");
+    let paid = false;
     function choose(key) {
       const button = buttons.find((b) => b.dataset.bill === key);
       buttons.forEach((b) => b.setAttribute("aria-checked", String(b === button)));
@@ -103,18 +111,32 @@
        document.querySelector("[data-per]").textContent,
        document.querySelector("[data-price-note]").textContent] = PLANS[key];
       const link = CHECKOUT[key];
-      const ready = !!(account && (link || (PADDLE.token && PADDLE[key])));
-      pay.hidden = !ready;
-      soon.hidden = ready;
+      const open = !!(link || (PADDLE.token && PADDLE[key]));
+      const ready = open && !!account;
+      pay.hidden = !ready || paid;
+      soon.hidden = open;
+      fromApp.hidden = !open || !!account || paid;
       pay.dataset.bill = key;
       pay.href = link && account ? link.replace("{account}", encodeURIComponent(account)) : "#";
     }
-    if (PADDLE.token && account) {
+    // Paddle.js also when Paddle sends someone here to update a card
+    // (?_ptxn=… — this page is the account's default payment link).
+    const update = new URLSearchParams(location.search).has("_ptxn");
+    if (PADDLE.token && (account || update)) {
       const script = document.createElement("script");
       script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
       script.onload = () => {
         if (PADDLE.token.startsWith("test_")) window.Paddle.Environment.set("sandbox");
-        window.Paddle.Initialize({ token: PADDLE.token });
+        window.Paddle.Initialize({
+          token: PADDLE.token,
+          eventCallback: (event) => {
+            if (event && event.name === "checkout.completed" && !update) {
+              paid = true;
+              pay.hidden = true;
+              thanks.hidden = false;
+            }
+          },
+        });
       };
       document.head.appendChild(script);
       pay.addEventListener("click", (event) => {
