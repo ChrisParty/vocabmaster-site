@@ -3,5 +3,16 @@
   "url": "https://chrisparty.github.io/vocabmaster-site/releases/VocabMaster-1.3.6.zip",
   "sha256": "435cef4097f235b4f3ac7ad2e5156e2e3dcd9777e4103c81898df780c0c53809",
   "notes": "badges, Say it on study cards, a listening quiz, an expert level, clearer wording and safer updates",
-  "published": "2026-10-22"
+  "published": "2026-10-22",
+  "preview": {
+    "version": "1.4.0",
+    "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.4.0/SweetVocab-1.4.0.zip",
+    "sha256": "7cff54a1414b05725bbe97515f215649cae3910d074dac2a30c75b7e72018b23",
+    "setup": {
+      "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.4.0/SweetVocab-Setup-1.4.0.exe",
+      "sha256": "5a4c4acb892d745eec274165549be868498a045f5c44b04b037b6efaf0ed8356"
+    },
+    "notes": "SweetVocab 1.4.0 preview for the pre-launch review: 7-day trial, Pro, no key needed",
+    "published": "2026-10-28"
+  }
 }
