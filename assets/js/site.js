@@ -133,11 +133,14 @@
       } catch (err) { /* the person closed the share sheet */ }
     });
 
-    loadLatest().then((data) => {
-      if (!data) {
+    loadLatest().then((latest) => {
+      if (!latest) {
         $$("[data-version]").forEach((el) => { el.textContent = "Windows & Mac"; });
         return;
       }
+      // A "preview" is offered here before installed copies get it: they read
+      // only the top level (publish_release.py --preview).
+      const data = latest.preview && latest.preview.url ? latest.preview : latest;
       download.version = data.version || "";
       download.mac = data.url;
       download.windows = (data.setup && data.setup.url) || data.url;

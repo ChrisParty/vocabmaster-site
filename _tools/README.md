@@ -16,8 +16,8 @@ python -m http.server 8000
 ```
 
 then open <http://localhost:8000>. The download buttons read the live
-`latest.json`, so until 1.4.0 is published they download **1.3.6** (the
-version that still asks for an OpenAI key).
+`latest.json`, so until 1.4.0 is published (or put up as a preview) they
+download **1.3.6** (the version that still asks for an OpenAI key).
 
 ## Going live, in this order (only on Mike's go-ahead)
 
@@ -44,8 +44,16 @@ version that still asks for an OpenAI key).
    The terms promise a full refund within 14 days of any payment and Swedish
    law — read them; payment providers check that terms and a refund policy
    are on the site.
-5. **Release 1.4.0 and the installer**, then merge this branch (below). The
-   page sells the product as it is from 1.4.0: a 7-day trial, Pro, no key.
+5. **Merge this branch** (below), then **1.4.0 as a preview**:
+   `python tools/publish_release.py --preview "…"` in the app's release
+   folder. latest.json gets a `preview` entry: the download buttons offer it
+   (`site.js` prefers it), while every installed copy reads only the top level
+   and still sees 1.3.6 — no friend is offered anything (Mike, 2026-10-28:
+   friends only when everything is finished). The ChatGPT/Codex review runs
+   on it. When everything is done: a new number (1.4.1; the preview used
+   1.4.0) and a normal publish — every copy is offered it and the preview
+   ends. The page sells the product as it is from 1.4.0: a 7-day trial, Pro,
+   no key.
 6. **Payments**: the app's Settings → Your plan → **Get Pro** opens
    `pro.html?account=VM-…`. When the payment provider exists, fill in the
    bottom of `pro.html`: Lemon Squeezy → its two checkout links in `CHECKOUT`,
