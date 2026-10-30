@@ -94,21 +94,21 @@
   }
 
   function setupDownloads() {
-    const primary = OS === "mac" ? "mac" : "windows";
-    const other = primary === "mac" ? "windows" : "mac";
+    // Windows only until the Mac build is signed (2026-10-30): the Mac card
+    // says "coming later", the second button stays hidden, a Mac visitor
+    // gets the Windows download like everyone else.
+    const primary = "windows";
+    const other = "windows";
     const label = $("[data-os-label]");
-    const otherLabel = $("[data-other-label]");
+    $("[data-download-other]").hidden = true;
     if (OS === "mobile") {
       label.textContent = "Get it for your computer";
       $("[data-os-icon] use").setAttribute("href", "#i-download");
-      $("[data-download-other]").hidden = true;
       $("[data-mobile-note]").hidden = false;
       $(".download-grid").hidden = true;
     } else {
-      label.textContent = primary === "mac" ? "Download for Mac" : "Download for Windows";
-      $("[data-os-icon] use").setAttribute("href", primary === "mac" ? "#i-apple" : "#i-windows");
-      otherLabel.textContent = other === "mac" ? "Also for Mac" : "Also for Windows";
-      $("[data-other-icon] use").setAttribute("href", other === "mac" ? "#i-apple" : "#i-windows");
+      label.textContent = "Download for Windows";
+      $("[data-os-icon] use").setAttribute("href", "#i-windows");
       const mine = $(`[data-dl="${primary}"]`);
       if (mine) mine.classList.add("yours");
     }
@@ -135,7 +135,7 @@
 
     loadLatest().then((latest) => {
       if (!latest) {
-        $$("[data-version]").forEach((el) => { el.textContent = "Windows & Mac"; });
+        $$("[data-version]").forEach((el) => { el.textContent = "For Windows"; });
         return;
       }
       // A "preview" is offered here before installed copies get it: they read

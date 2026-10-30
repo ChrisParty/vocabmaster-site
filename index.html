@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SweetVocab — learn words that stay</title>
-<meta name="description" content="A vocabulary trainer for Windows and Mac. Every new word gets a memory trick, a real example and a reading you can say — then comes back just before you'd forget it. Ten languages: Spanish, French, German, Italian, Portuguese, Swedish, Greek, Korean, Japanese and English. 7 days free.">
+<meta name="description" content="A vocabulary trainer for Windows. Every new word gets a memory trick, a real example and a reading you can say — then comes back just before you'd forget it. Ten languages: Spanish, French, German, Italian, Portuguese, Swedish, Greek, Korean, Japanese and English. 7 days free.">
 <meta name="theme-color" content="#0b0f16">
 <link rel="canonical" href="https://sweetvocab.com/">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -25,7 +25,7 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "SweetVocab",
-  "operatingSystem": "Windows, macOS",
+  "operatingSystem": "Windows",
   "applicationCategory": "EducationalApplication",
   "description": "A vocabulary trainer with memory tricks, real examples and spaced repetition. Spanish, French, German, Italian, Portuguese, Swedish, Greek, Korean, Japanese and English.",
   "offers": [
@@ -111,7 +111,7 @@
   <div class="hero-ruled" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="pill reveal"><span class="pulse-dot"></span> For Windows &amp; Mac · try it free for 7 days</p>
+      <p class="pill reveal"><span class="pulse-dot"></span> For Windows · try it free for 7 days</p>
       <h1 class="reveal">
         Learn <span class="morph" data-morph><span class="morph-word">words</span><span class="morph-reading" aria-hidden="true">&nbsp;</span></span><br>
         that <em class="stay">stay<svg class="stay-underline" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14C40 5 90 4 197 10"/></svg></em>.
@@ -122,7 +122,7 @@
           <svg class="ico" data-os-icon><use href="#i-windows"/></svg>
           <span data-os-label>Download for Windows</span>
         </a>
-        <a class="btn btn-ghost" href="#download" data-download-other>
+        <a class="btn btn-ghost" href="#download" data-download-other hidden>
           <svg class="ico" data-other-icon><use href="#i-apple"/></svg>
           <span data-other-label>Also for Mac</span>
         </a>
@@ -521,7 +521,7 @@
       <details class="reveal"><summary>Can I use it on two computers?</summary>
         <p>Yes. Connect your own Google Drive on both and they stay up to date. Or move everything in one file.</p></details>
       <details class="reveal"><summary>Is there a phone app?</summary>
-        <p>Not yet. SweetVocab is made for Windows and Mac computers, where a real keyboard and a big screen make learning comfortable.</p></details>
+        <p>Not yet. SweetVocab is made for Windows computers, where a real keyboard and a big screen make learning comfortable. A Mac version is coming.</p></details>
       <details class="reveal"><summary>Can I cancel?</summary>
         <p>Any time. Pro is a subscription you can stop whenever you like, and everything you learned stays on your computer. Changed your mind? Your money back within 14 days of a payment — <a href="terms.html#refunds">refunds</a>.</p></details>
     </div>
@@ -541,15 +541,14 @@
         <span><b>Windows</b><small>Windows 10 and 11</small></span>
         <svg class="ico"><use href="#i-download"/></svg>
       </a>
-      <a class="dl-card" href="#download" data-dl="mac">
+      <div class="dl-card" aria-disabled="true" style="opacity:.55;cursor:default">
         <svg class="ico ico-big"><use href="#i-apple"/></svg>
-        <span><b>Mac</b><small>macOS · beta, needs Python 3.11+</small></span>
-        <svg class="ico"><use href="#i-download"/></svg>
-      </a>
+        <span><b>Mac</b><small>coming later</small></span>
+      </div>
     </div>
     <p class="fine reveal"><span data-version>latest version</span></p>
     <div class="mobile-note" data-mobile-note hidden>
-      <p>SweetVocab runs on Windows and Mac computers. Send this page to yourself and open it there.</p>
+      <p>SweetVocab runs on Windows computers. Send this page to yourself and open it there.</p>
       <button class="btn btn-ghost" type="button" data-share>Copy the link</button>
     </div>
   </div>
@@ -578,7 +577,6 @@
   </div>
   <div class="install-os" role="tablist" aria-label="Your computer">
     <button type="button" role="tab" data-os-tab="windows" aria-selected="true">Windows</button>
-    <button type="button" role="tab" data-os-tab="mac" aria-selected="false">Mac</button>
   </div>
   <ol class="steps" data-steps></ol>
   <p class="install-foot">Nothing happened? <a href="#" data-retry>Download again</a>.</p>
