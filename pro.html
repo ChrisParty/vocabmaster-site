@@ -77,12 +77,11 @@
   //   so the payment finds its way to the right copy of SweetVocab).
   // PADDLE — Paddle: the client-side token and the two price ids; the checkout
   //   opens over this page with the account number as custom data.
-  // Both empty: "payments open very soon". Paddle since 2026-10-28 — SANDBOX
-  // (test_ token, test prices) until the live account is approved; then the
-  // live token and price ids here (and in the server's PADDLE_PRICES).
+  // Both empty: "payments open very soon". Paddle since 2026-10-28: empty until
+  // the live account is approved; then the live token and price ids here (and
+  // in the server's PADDLE_PRICES).
   const CHECKOUT = { month: "", year: "" };
-  const PADDLE = { token: "test_28d077c6f70037318fbbb5c7fe0", month: "pri_01m614yay8hzk002p4nkbgkeam",
-                   year: "pri_01m614yb3rbcwbmmgasezyantk" };
+  const PADDLE = { token: "", month: "", year: "" };
   const PLANS = {
     month: ["99 kr", "a month", "Cancel any time. Your words stay yours."],
     year: ["799 kr", "a year", "About 67 kr a month, paid once a year."],
