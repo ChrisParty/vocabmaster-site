@@ -59,7 +59,7 @@
   </div>
   <p class="soon-note" data-from-app hidden><b>Get Pro from the app:</b> open SweetVocab → Settings → Your plan → Get Pro. That brings your account number here, so Pro reaches your copy of SweetVocab.</p>
   <p class="soon-note" data-thanks hidden><b>Thank you — Pro is on.</b> In SweetVocab, open Settings → Your plan: it says Pro within a minute. A receipt is on its way to your e-mail.</p>
-  <p class="soon-note" data-soon><b>Payments open very soon.</b> Your words and your reviews stay free in the meantime — and your account number above is all we need to switch you to Pro.</p>
+  <p class="soon-note" data-soon><b>Pro is sold through our reseller, Paddle.com.</b> Your account number above links the subscription to your copy of SweetVocab.</p>
 </main>
 
 <footer class="footer">
@@ -77,7 +77,7 @@
   //   so the payment finds its way to the right copy of SweetVocab).
   // PADDLE — Paddle: the client-side token and the two price ids; the checkout
   //   opens over this page with the account number as custom data.
-  // Both empty: "payments open very soon". Paddle since 2026-10-28: empty until
+  // Both empty: the reseller line only, no button (never "soon": Mike, 2026-11-01). Paddle since 2026-10-28: empty until
   // the live account is approved; then the live token and price ids here (and
   // in the server's PADDLE_PRICES).
   const CHECKOUT = { month: "", year: "" };
