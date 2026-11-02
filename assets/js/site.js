@@ -9,6 +9,15 @@
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const SITE = "https://sweetvocab.com/";
+  // The Windows download is the Microsoft Store's installer (2026-11-02): a
+  // small Microsoft-signed .exe that installs the Store copy — no "Windows
+  // protected your PC", updates through the Store. The direct installer from
+  // latest.json stays as the small second link (and for friends' updates).
+  const STORE = {
+    id: "9PL9X47P6K5N",
+    installer: "https://get.microsoft.com/installer/download/9PL9X47P6K5N",
+    page: "https://apps.microsoft.com/detail/9PL9X47P6K5N",
+  };
 
   /* ================================================================ which computer */
 
@@ -26,9 +35,9 @@
   /* ================================================================ downloads */
 
   // latest.json is what the app itself reads to find updates: one source of
-  // truth for the version and the files. "setup" (the Windows installer)
-  // appears once the installer is published; until then Windows gets the zip.
-  const download = { version: "", windows: "", mac: "", windowsKind: "zip" };
+  // truth for the version and the files. "windows" is the Store's installer;
+  // "direct" is the installer from latest.json ("setup"; the zip before it).
+  const download = { version: "", windows: STORE.installer, direct: "", mac: "", directKind: "zip" };
 
   async function loadLatest() {
     for (const url of ["latest.json", SITE + "latest.json"]) {
@@ -43,6 +52,11 @@
   }
 
   const STEPS = {
+    store: [
+      "<b>Open SweetVocab Installer</b> from your downloads.<small>It comes from the Microsoft Store and is signed by Microsoft, so Windows opens it without a warning.</small>",
+      "<b>A small Microsoft window installs SweetVocab</b> — about a minute — and opens it.",
+      "<b>Pick the language you want to learn</b> — your 7 free days start now.",
+    ],
     setup: [
       "<b>Open SweetVocab-Setup</b> from your downloads.",
       "If Windows says <b>“Windows protected your PC”</b>, choose <b>More info → Run anyway</b>.<small>SweetVocab is new, so Windows doesn't know it yet.</small>",
@@ -62,23 +76,26 @@
 
   const dialog = $("[data-install]");
 
-  function showSteps(os) {
-    const steps = os === "mac" ? STEPS.mac : STEPS[download.windowsKind];
+  // `kind`: "windows" (the Store's installer), "direct" (the installer from
+  // latest.json) or "mac".
+  function showSteps(kind) {
+    const steps = kind === "mac" ? STEPS.mac : kind === "direct" ? STEPS[download.directKind] : STEPS.store;
     $("[data-steps]").innerHTML = steps.map((s) => `<li>${s}</li>`).join("");
+    const os = kind === "mac" ? "mac" : "windows";
     $$("[data-os-tab]").forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.osTab === os)));
-    const url = download[os];
-    const file = url ? decodeURIComponent(url.split("/").pop()) : "";
+    const url = download[kind];
+    const file = kind === "windows" ? "SweetVocab Installer.exe" : url ? decodeURIComponent(url.split("/").pop()) : "";
     $("[data-install-file]").textContent = file ? `${file}${download.version ? " · version " + download.version : ""}` : "";
-    $("[data-retry]").dataset.os = os;
+    $("[data-retry]").dataset.os = kind;
   }
 
-  function startDownload(os) {
+  function startDownload(kind) {
     if (OS === "mobile") {
       document.getElementById("download").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
       return;
     }
-    const url = download[os];
-    showSteps(os);
+    const url = download[kind];
+    showSteps(kind);
     $("[data-install-title]").textContent = url ? "Your download has started" : "Almost there";
     if (dialog && typeof dialog.showModal === "function" && !dialog.open) dialog.showModal();
     if (url) {
@@ -143,8 +160,8 @@
       const data = latest.preview && latest.preview.url ? latest.preview : latest;
       download.version = data.version || "";
       download.mac = data.url;
-      download.windows = (data.setup && data.setup.url) || data.url;
-      download.windowsKind = data.setup && data.setup.url ? "setup" : "zip";
+      download.direct = (data.setup && data.setup.url) || data.url;
+      download.directKind = data.setup && data.setup.url ? "setup" : "zip";
       $$("[data-version]").forEach((el) => { el.textContent = `Version ${download.version}`; });
     });
   }
