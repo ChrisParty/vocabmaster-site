@@ -457,7 +457,7 @@
     <div class="plans">
       <article class="plan reveal">
         <h3>Free trial</h3>
-        <p class="price"><b>0 kr</b><span>for 7 days</span></p>
+        <p class="price"><b data-money="zero">0 kr</b><span>for 7 days</span></p>
         <p class="plan-lede">Everything SweetVocab does, from the first minute. No card needed.</p>
         <ul class="checks">
           <li><svg class="ico"><use href="#i-check"/></svg><span>AI-written cards with memory tricks</span></li>
@@ -470,8 +470,8 @@
       <article class="plan plan-pro reveal">
         <span class="plan-flag">Recommended</span>
         <h3>Pro</h3>
-        <p class="price"><b>99 kr</b><span>a month</span></p>
-        <p class="plan-lede">Or 799 kr a year — four months free. Cancel any time.</p>
+        <p class="price"><b data-money="month">99 kr</b><span>a month</span></p>
+        <p class="plan-lede" data-money-lede>Or 799 kr a year — a third less. Cancel any time.</p>
         <ul class="checks">
           <li><svg class="ico"><use href="#i-check"/></svg><span>New AI-written words every day — up to 1,200 a month</span></li>
           <li><svg class="ico"><use href="#i-check"/></svg><span>A new story every day, two conversations a day</span></li>
@@ -482,7 +482,7 @@
       </article>
     </div>
     <p class="forever reveal"><b>Free forever, after the trial too:</b> every word you've made, your reviews and quizzes, the alphabet, your streak and your badges. Nothing you learned is ever locked away.</p>
-    <p class="fine center reveal">Prices in Swedish kronor (SEK). At checkout you pay in your own currency, through our reseller Paddle.com.</p>
+    <p class="fine center reveal" data-money-note>Prices in Swedish kronor. The exact price in your currency is shown before you pay, through our reseller Paddle.com.</p>
   </div>
 </section>
 
@@ -579,6 +579,7 @@
 </dialog>
 
 <noscript><style>.reveal{opacity:1!important;transform:none!important}.rate-row,.demo-caption{display:none}</style></noscript>
+<script src="assets/js/prices.js"></script>
 <script src="assets/js/site.js" defer></script>
 </body>
 </html>
