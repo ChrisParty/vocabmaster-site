@@ -11,6 +11,7 @@
 <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/prices.js"></script>
 <style>
   .pro-main { max-width: 900px; padding-top: 130px; padding-bottom: 90px; text-align: center; }
   .pro-main h1 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-size: clamp(42px, 6vw, 68px); line-height: 1.05; letter-spacing: -.02em; margin-bottom: 18px; }
@@ -46,7 +47,7 @@
       <span class="plan-flag">Pro</span>
       <h3>SweetVocab Pro</h3>
       <p class="price"><b data-price>799 kr</b><span data-per>a year</span></p>
-      <p class="plan-lede" data-price-note>About 67 kr a month, paid once a year.</p>
+      <p class="plan-lede" data-price-note>Paid once a year — a third less.</p>
       <ul class="checks">
         <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>New AI-written words every day — up to 1,200 a month</span></li>
         <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>A new story every day, two conversations a day</span></li>
@@ -54,7 +55,7 @@
         <li><svg class="ico" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Every language, on two computers · cancel any time</span></li>
       </ul>
       <a class="btn btn-primary btn-block" href="#" data-checkout hidden>Continue to payment</a>
-      <p class="plan-fine">Cancel any time · <a href="terms.html#refunds">money back within 14 days</a> · <a href="terms.html">terms</a> · prices in Swedish kronor, you pay in your own currency</p>
+      <p class="plan-fine">Cancel any time · <a href="terms.html#refunds">money back within 14 days</a> · <a href="terms.html">terms</a> · the exact price in your currency is shown before you pay</p>
     </article>
   </div>
   <p class="soon-note" data-from-app hidden><b>Get Pro from the app:</b> open SweetVocab → Settings → Your plan → Get Pro. That brings your account number here, so Pro reaches your copy of SweetVocab.</p>
@@ -82,9 +83,11 @@
   // in the server's PADDLE_PRICES).
   const CHECKOUT = { month: "", year: "" };
   const PADDLE = { token: "live_783c7896a12982bab331878e3e4", month: "pri_01m6dstdyacyry1hxp4mrtw94v", year: "pri_01m6dste3gyx7rd4n0xjag38zv" };
+  // The visitor's currency (assets/js/prices.js); Paddle charges the same numbers there.
+  const MONEY = window.SweetPrices || { month: "99 kr", year: "799 kr" };
   const PLANS = {
-    month: ["99 kr", "a month", "Cancel any time. Your words stay yours."],
-    year: ["799 kr", "a year", "About 67 kr a month, paid once a year."],
+    month: [MONEY.month, "a month", "Cancel any time. Your words stay yours."],
+    year: [MONEY.year, "a year", "Paid once a year — a third less."],
   };
   (function () {
     const raw = new URLSearchParams(location.search).get("account") || "";
