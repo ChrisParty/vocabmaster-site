@@ -112,7 +112,7 @@
 
   function setupDownloads() {
     // Windows only until the Mac build is signed (2026-10-30): the Mac card
-    // says "coming later", the second button stays hidden, a Mac visitor
+    // says "not yet", the second button stays hidden, a Mac visitor
     // gets the Windows download like everyone else.
     const primary = "windows";
     const other = "windows";
