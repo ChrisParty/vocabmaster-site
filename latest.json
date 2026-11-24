@@ -1,11 +1,11 @@
 {
-  "version": "1.4.1",
-  "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.4.1/SweetVocab-1.4.1.zip",
-  "sha256": "85f184c37703e2afc9b3f9e4bd2c2fbb42a3320177dd41c61e8ccb2144623230",
+  "version": "1.5.0",
+  "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.5.0/SweetVocab-1.5.0.zip",
+  "sha256": "26b91fb0173640dfc394541b5c0edf714f46696e930042cb059e1b185b07df2f",
   "setup": {
-    "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.4.1/SweetVocab-Setup-1.4.1.exe",
-    "sha256": "fd9d6ce8d1bfc2c766e825b341a0725b08788ef91ca1c9864ea76b526c38a889"
+    "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.5.0/SweetVocab-Setup-1.5.0.exe",
+    "sha256": "81d713c9ebce35747b04253c92b2aaa46b9b846fc7bffc2f125cdee2935bf554"
   },
-  "notes": "SweetVocab: the AI now works without your own key, Say it hears far better, and there are ten languages.",
-  "published": "2026-11-01"
+  "notes": "One account for every computer and phone, harder as you learn, questions in one word, seventeen languages",
+  "published": "2026-11-24"
 }
