@@ -60,7 +60,7 @@
   </div>
   <p class="soon-note" data-from-app hidden><b>Get Pro from the app:</b> open SweetVocab → Settings → Your plan → Get Pro. That brings your account number here, so Pro reaches your copy of SweetVocab.</p>
   <p class="soon-note" data-thanks hidden><b>Thank you — Pro is on.</b> In SweetVocab, open Settings → Your plan: it says Pro within a minute. A receipt is on its way to your e-mail.</p>
-  <p class="soon-note" data-soon><b>Pro is sold through our reseller, Paddle.com.</b> Your account number above links the subscription to your copy of SweetVocab.</p>
+  <p class="soon-note" data-soon><b>Pro is not on sale at the moment.</b> The free trial includes everything.</p>
 </main>
 
 <footer class="footer">
@@ -80,7 +80,8 @@
   //   opens over this page with the account number as custom data.
   // Both empty: the reseller line only, no button (never "soon").
   const CHECKOUT = { month: "", year: "" };
-  const PADDLE = { token: "live_783c7896a12982bab331878e3e4", month: "pri_01m6dstdyacyry1hxp4mrtw94v", year: "pri_01m6dste3gyx7rd4n0xjag38zv" };
+  // Paddle dropped 2026-11-24 (its review never ended): Pro comes through the Microsoft Store.
+  const PADDLE = { token: "", month: "", year: "" };
   // The visitor's currency (assets/js/prices.js); Paddle charges the same numbers there.
   const MONEY = window.SweetPrices || { month: "99 kr", year: "799 kr" };
   const PLANS = {
