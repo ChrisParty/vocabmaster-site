@@ -961,7 +961,7 @@
     const note = $("[data-price-note]");
     const PLANS = {
       month: ["99 kr", "a month", "Cancel any time. Your words stay yours."],
-      year: ["799 kr", "a year", "About 67 kr a month, paid once a year."],
+      year: ["599 kr", "a year", "Just under 50 kr a month, paid once a year."],
     };
     const choose = (key, animate = true) => {
       const button = buttons.find((b) => b.dataset.bill === key);

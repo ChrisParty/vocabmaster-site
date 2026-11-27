@@ -1,13 +1,14 @@
-/* Prices in the visitor's currency.
-   The numbers are what Paddle charges in those countries (country prices on
-   the two live prices — set by `tools/paddle_live.py prices` in the app repo;
-   the two tables must stay the same). Everyone else sees US dollars, and the
-   checkout shows the exact price in their own currency before they pay.
-   Without JavaScript the page keeps its Swedish kronor. */
+/* What Pro costs.
+   Since 2026-11-27 Pro is bought inside the app, from the Microsoft Store:
+   Microsoft is the seller and sets each country's own price from the Swedish
+   one, so no table here can say what someone in Berlin pays — the Store's own
+   window does, before they pay. The site therefore shows the Swedish prices
+   and says so. The country table below is kept for the day a web checkout
+   returns; nothing reads it while STORE is true. */
 (function () {
   "use strict";
   var PRICES = {
-    SEK: { month: "99 kr", year: "799 kr", zero: "0 kr", name: "Swedish kronor" },
+    SEK: { month: "99 kr", year: "599 kr", zero: "0 kr", name: "Swedish kronor" },
     USD: { month: "$9.99", year: "$79.99", zero: "$0", name: "US dollars" },
     EUR: { month: "€8.99", year: "€69.99", zero: "€0", name: "euros" },
     GBP: { month: "£7.99", year: "£59.99", zero: "£0", name: "British pounds" }
@@ -63,11 +64,15 @@
     return american ? "US" : "";
   }
 
-  var code = COUNTRY[country()] || "USD";
+  // Pro is sold in the Microsoft Store: one price list, Microsoft converts it.
+  var STORE = true;
+  var code = STORE ? "SEK" : (COUNTRY[country()] || "USD");
   var p = PRICES[code];
   window.SweetPrices = {
     currency: code, month: p.month, year: p.year, zero: p.zero,
-    note: "Prices in " + p.name + ". The exact price in your currency is shown before you pay, through our reseller Paddle.com."
+    note: STORE
+      ? "Prices in " + p.name + ". Pro is bought inside SweetVocab, from the Microsoft Store: it shows the price in your own currency before you pay."
+      : "Prices in " + p.name + ". The exact price in your currency is shown before you pay, through our reseller Paddle.com."
   };
 
   function fill() {
@@ -77,7 +82,7 @@
     };
     set("[data-money='month']", p.month);
     set("[data-money='zero']", p.zero);
-    set("[data-money-lede]", "Or " + p.year + " a year — a third less. Cancel any time.");
+    set("[data-money-lede]", "Or " + p.year + " a year — half the monthly price. Cancel any time.");
     set("[data-money-note]", window.SweetPrices.note);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fill); else fill();
