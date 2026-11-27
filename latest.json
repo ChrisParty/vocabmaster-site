@@ -1,11 +1,11 @@
 {
-  "version": "1.5.0",
-  "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.5.0/SweetVocab-1.5.0.zip",
-  "sha256": "26b91fb0173640dfc394541b5c0edf714f46696e930042cb059e1b185b07df2f",
+  "version": "1.5.2",
+  "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.5.2/SweetVocab-1.5.2.zip",
+  "sha256": "7b51c04cb907aff78f657979f63333128304955f7d9f7fbe090b94b50a5e3576",
   "setup": {
-    "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.5.0/SweetVocab-Setup-1.5.0.exe",
-    "sha256": "81d713c9ebce35747b04253c92b2aaa46b9b846fc7bffc2f125cdee2935bf554"
+    "url": "https://github.com/ChrisParty/vocabmaster-site/releases/download/v1.5.2/SweetVocab-Setup-1.5.2.exe",
+    "sha256": "4b44e3c5e97cbedd9771e80dd20ef6937e9aaff4287174455c755ee88ee5cd3c"
   },
-  "notes": "One account for every computer and phone, harder as you learn, questions in one word, seventeen languages",
-  "published": "2026-11-24"
+  "notes": "Pro can now be bought in the app, from the Microsoft Store",
+  "published": "2026-11-27"
 }
